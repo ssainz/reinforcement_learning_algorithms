@@ -29,7 +29,8 @@ class pi_net(nn.Module):
     def forward(self, x):
         #print(x.shape)
         #print(x)
-        x = F.sigmoid(self.linear1(x))
+        #x = F.sigmoid(self.linear1(x))
+        x = F.tanh(self.linear1(x))
         #x = F.softmax(self.linear2(x), dim=0)
         x = self.linear2(x)
         return x.view(-1, 4)
@@ -39,23 +40,23 @@ class pi_net(nn.Module):
 def weights_init(m):
 	classname = m.__class__.__name__
 	if classname.find('Linear') != -1:
-		# m.weight.data.normal_(0.0, 0.02)
-		# m.weight.data.uniform_(0.0, 0.02)
-		m.weight.data.fill_(0.5)
+		m.weight.data.normal_(0.0, 0.02)
+		#m.weight.data.uniform_(0.0, 0.02)
+		#m.weight.data.fill_(0.5)
 
 
 
 
 def get_state_repr(state_idx):
-    return state_idx * 13
+    return (1 + state_idx) * 997
 
 
 import numpy as np
 import torch.optim as optim
 from torch.distributions import Categorical
 
-NUM_EPISODES = 1000000
-GAMMA = 0.9
+NUM_EPISODES = 100000
+GAMMA = 0.99
 net = pi_net()
 net.apply(weights_init)
 optimizer = optim.RMSprop(net.parameters(), lr=0.001)
@@ -142,8 +143,11 @@ for k in range(NUM_EPISODES):
 
 		if k % 1000 == 0:
 			print("new state=" + str(observation) + ", done=" + str(done))
+
 		# if done and reward != 1.0:
-		#             reward = -1.0
+		# 	if observation == 5 or observation == 7 or observation == 11 or observation == 12:
+		# 		reward = -1.0
+
 		step_data = [get_state_repr(observation), action, log_prob, reward, done, info]
 		episode_series.append(step_data)
 	# env.render()
@@ -173,10 +177,12 @@ for k in range(NUM_EPISODES):
 	for i in range(len(episode_series)):
 		j = i
 		G = 0
-		alpha = 1 / len(episode_series)
+		#alpha = 1 / len(episode_series)
 
 		# get the log_prob of the last state:
-		gamma_cum = GAMMA
+		gamma_cum = 1
+
+
 
 		while j < len(episode_series):
 			[observation, action, log_prob, reward, done, info] = episode_series[j]
@@ -184,17 +190,28 @@ for k in range(NUM_EPISODES):
 
 			gamma_cum = gamma_cum * GAMMA
 			j = j + 1
+
+		[observation, action, log_prob, reward, done, info] = episode_series[i]
+
 		policy_loss.append(G * -log_prob)
+
+
 		rewards_list.append(G)
 
-	if G > 0.0 or True:  # Optimize only if rewards are non zero.
+	policy_loss = torch.cat(policy_loss).sum()
+	policy_loss.backward()
+	optimizer.step()
+
+	times_trained = times_trained + 1
+
+	#if G != 0.0:  # Optimize only if rewards are non zero.
 		# print "Reward list"
 		# print rewards_list
-		optimizer.zero_grad()
-		policy_loss = torch.cat(policy_loss).sum()
-		policy_loss.backward()
-		optimizer.step()
-		times_trained = times_trained + 1
+	#	optimizer.zero_grad()
+	#	policy_loss = torch.cat(policy_loss).sum()
+	#	policy_loss.backward()
+	#	optimizer.step()
+	#	times_trained = times_trained + 1
 
-	if G > 0.0:
+	if reward > 0.0:
 		times_reach_goal = times_reach_goal + 1
