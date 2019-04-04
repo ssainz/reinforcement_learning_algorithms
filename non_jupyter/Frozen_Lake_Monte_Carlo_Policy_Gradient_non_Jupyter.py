@@ -30,7 +30,8 @@ class pi_net(nn.Module):
         #print(x.shape)
         #print(x)
         #x = F.sigmoid(self.linear1(x))
-        x = F.tanh(self.linear1(x))
+        x = torch.sum(self.linear1(x))
+        x = F.tanh()
         #x = F.softmax(self.linear2(x), dim=0)
         x = self.linear2(x)
         return x.view(-1, 4)
@@ -40,11 +41,15 @@ class pi_net(nn.Module):
 def weights_init(m):
 	classname = m.__class__.__name__
 	if classname.find('Linear') != -1:
-		m.weight.data.normal_(0.0, 0.02)
-		#m.weight.data.uniform_(0.0, 0.02)
+		#m.weight.data.normal_(0.01, 0.02)
+		m.weight.data.uniform_(0.01, 0.02)
 		#m.weight.data.fill_(0.5)
 
 
+def print_net(model):
+	for name, param in model.named_parameters():
+		if param.requires_grad:
+			print(name, param.data.numpy())
 
 
 def get_state_repr(state_idx):
@@ -150,7 +155,9 @@ for k in range(NUM_EPISODES):
 
 		step_data = [get_state_repr(observation), action, log_prob, reward, done, info]
 		episode_series.append(step_data)
-	# env.render()
+		last_reward = reward
+
+	# END WHILE SIMULATION
 
 	if len(score) < 100:
 		score.append(reward)
@@ -198,6 +205,11 @@ for k in range(NUM_EPISODES):
 
 		rewards_list.append(G)
 
+	if reward > 0.0:
+		print_table()
+		print_net(net)
+
+
 	policy_loss = torch.cat(policy_loss).sum()
 	policy_loss.backward()
 	optimizer.step()
@@ -212,6 +224,12 @@ for k in range(NUM_EPISODES):
 	#	policy_loss.backward()
 	#	optimizer.step()
 	#	times_trained = times_trained + 1
+	if reward > 0.0:
+		print("Reward" + str(reward))
+		print_net(net)
+		print_table()
+		if times_trained > 0:
+			exit()
 
 	if reward > 0.0:
 		times_reach_goal = times_reach_goal + 1
