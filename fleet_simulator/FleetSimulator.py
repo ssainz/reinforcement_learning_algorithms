@@ -6,31 +6,34 @@ import numpy as np
 class FleetEnv():
 
 
-    def __init__(self):
-        init(self)
-
-
-    def reset(self):
-        init(self)
-        return self.city
-
-
     def init(self):
         self.len = 6
 
-        self.city = np.zeros(self.len, self.len)
-        self.rewards = np.zeros(self.len, self.len)
+        self.city = np.zeros((self.len, self.len))
+        self.city[0,0] = 1
+        self.rewards = np.zeros((self.len, self.len))
 
         self.high_mean = 4
-        self.high_std = 1
+        self.high_std = 0.1
 
         self.low_mean = 2
-        self.low_std = 1
+        self.low_std = 0.1
 
         self.time = 0
         self.distance = {}
         self.curr_location_col = 0
         self.curr_location_row = 0
+
+    def __init__(self):
+        self.init()
+
+
+    def reset(self):
+        self.init()
+        return self.city
+
+
+
 
     def step(self, action):
 
@@ -46,14 +49,14 @@ class FleetEnv():
 
 
         # generate rewards
-        generate_rewards(self)
+        self.generate_rewards()
 
         # get rewards
         reward = self.rewards[action_row, action_column] * ( 1 - 0.8 * (curr_distance / tot_distance))
 
         # Update state then next.
-        self.curr_location_row = action_column
-        self.curr_location_col = action_row
+        self.curr_location_row = action_row
+        self.curr_location_col = action_column
 
         for i in range(0, self.len):
             for j in range(0, self.len):
@@ -67,7 +70,7 @@ class FleetEnv():
         if self.time >= 24:
             done = True
 
-        return self.city, reward, done
+        return self.city, reward, done, {}
 
 
     def generate_rewards(self):
@@ -77,7 +80,7 @@ class FleetEnv():
             # High rewards in core
 
 
-            center = round((self.len - 1) / 2)
+            center = int(round((self.len - 1) / 2))
 
             for i in range(center - 1, center + 2):
                 for j in range(center - 1, center + 2):

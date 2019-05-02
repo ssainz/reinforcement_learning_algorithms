@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="395f9e16-96f8-4641-aff5-db125d0ac7ab" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgent.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgentConcurrent.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fleet_simulator/FleetSimulatorConcurrent.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fleet_simulator/FleetSimulatorEnvConcurrent.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fleet_simulator/Models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fleet_simulator/FleetSimulator.py" afterPath="$PROJECT_DIR$/fleet_simulator/FleetSimulator.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgent.py" afterPath="$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgent.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,8 +43,8 @@
       <file leaf-file-name="FleetSimulator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+            <state relative-caret-position="11">
+              <caret line="21" column="21" lean-forward="true" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -49,10 +53,54 @@
       <file leaf-file-name="FleetSimulatorAgent.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="132" column="19" lean-forward="true" selection-start-line="132" selection-start-column="19" selection-end-line="132" selection-end-column="19" />
+            <state relative-caret-position="344">
+              <caret line="168" column="15" lean-forward="true" selection-start-line="168" selection-start-column="15" selection-end-line="168" selection-end-column="15" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fleet_simulator/Models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="18" lean-forward="false" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FleetSimulatorEnvConcurrent.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulatorEnvConcurrent.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="84" column="96" lean-forward="false" selection-start-line="84" selection-start-column="96" selection-end-line="84" selection-end-column="96" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FleetSimulatorConcurrent.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulatorConcurrent.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#48#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FleetSimulatorAgentConcurrent.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgentConcurrent.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="197" column="0" lean-forward="true" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -80,6 +128,8 @@
     <findStrings>
       <find>get_state_repr</find>
       <find>rewards_list</find>
+      <find>get_state_repr_idx</find>
+      <find>print_t</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -90,6 +140,10 @@
       <list>
         <option value="$PROJECT_DIR$/Frozen_Lake_Actor_Critic_Batch_NoReplacement.ipynb" />
         <option value="$PROJECT_DIR$/non_jupyter/Frozen_Lake_Monte_Carlo_Policy_Gradient_non_Jupyter.py" />
+        <option value="$PROJECT_DIR$/fleet_simulator/Models.py" />
+        <option value="$PROJECT_DIR$/fleet_simulator/FleetSimulatorConcurrent.py" />
+        <option value="$PROJECT_DIR$/fleet_simulator/FleetSimulatorEnvConcurrent.py" />
+        <option value="$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgentConcurrent.py" />
         <option value="$PROJECT_DIR$/fleet_simulator/FleetSimulator.py" />
         <option value="$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgent.py" />
       </list>
@@ -267,18 +321,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fleet_simulator/Models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="18" lean-forward="false" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulatorConcurrent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulatorEnvConcurrent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="84" column="96" lean-forward="false" selection-start-line="84" selection-start-column="96" selection-end-line="84" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgentConcurrent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="197" column="0" lean-forward="true" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        <state relative-caret-position="11">
+          <caret line="21" column="21" lean-forward="true" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fleet_simulator/FleetSimulatorAgent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="132" column="19" lean-forward="true" selection-start-line="132" selection-start-column="19" selection-end-line="132" selection-end-column="19" />
+        <state relative-caret-position="344">
+          <caret line="168" column="15" lean-forward="true" selection-start-line="168" selection-start-column="15" selection-end-line="168" selection-end-column="15" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>

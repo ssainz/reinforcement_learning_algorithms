@@ -68,7 +68,7 @@ class pi_net(nn.Module):
         # print(x)
         # print("AFTER sigmoid = = = = = = = = = =")
         x = self.linear3(x)
-        return x.view(-1, 4)
+        return x.view(-1, 36)
 
 
         # --- 0000 ---- 0000 >>>  feature scaling
@@ -115,22 +115,58 @@ def print_net(model):
             print(name, param.data.numpy())
 
 
-def get_state_repr_idx(state_idx):
-    sign = 1
-    if state_idx % 2 == 0:
-        sign = -1
-    return (state_idx + 1 ) * 13 * sign
+def get_state_repr_from_int(state_idx):
+
+    city = np.zeros((6,6))
+
+    row = int(state_idx / 6)
+    col = state_idx % 6
+    city[row,col] = 1
+
+    return get_state_repr(city)
+
+def get_state_from_int(state_idx):
+
+    city = np.zeros((6,6))
+
+    row = int(state_idx / 6)
+    col = state_idx % 6
+    city[row,col] = 1
+
+    return city
+
+
+def get_state_as_int(state):
+
+    rows = state.shape[0]
+    cols = state.shape[1]
+    r = 0
+    c = 0
+    for i in range(rows):
+        for j in range(cols):
+            if state[i,j] == 1:
+                return state.shape[0] * i + j
 
 def get_state_repr(state_repr):
     state = state_repr.flatten()
     return state
 
-
+def get_state_as_pair(state):
+    rows = state.shape[0]
+    cols = state.shape[1]
+    r = 0
+    c = 0
+    for i in range(rows):
+        for j in range(cols):
+            if state[i,j] == 1:
+                c = j
+                r = i
+    return "(" + str(r) + "," + str(c) + ")"
 
 import torch.optim as optim
 from torch.distributions import Categorical
 
-NUM_EPISODES = 1000000
+NUM_EPISODES = 50000
 GAMMA = 0.99
 net = pi_net()
 net.apply(weights_init_1st)
@@ -144,11 +180,11 @@ ByteTensor = torch.ByteTensor
 
 def print_table():
     for i in range(36):
-        st = np.array(get_state_repr(i))
+        st = np.array(get_state_repr_from_int(i))
         st = np.expand_dims(st, axis=0)
         net.eval()
         action_probs = net(FloatTensor(st))
-        # action_probs = F.softmax(action_probs, dim=1)
+        action_probs = F.softmax(action_probs, dim=1)
         outp = " state (" + str(i) + ") "
         n = 0
         for tensr in action_probs:
@@ -157,17 +193,22 @@ def print_table():
                 n += 1
         print(outp)
 
+    print("--------------")
 
 
 score = []
 times_trained = 0
 times_reach_goal = 0
+
+reward_chart = []
 for k in range(NUM_EPISODES):
     done = False
     observation = env.reset()
     # observation, reward, done, info = env.step(env.action_space.sample()) # take a random action
 
     episode_series = []
+    reward_acum = []
+    time_of_day = 0
     while not done:
         # Get action from pi
         # action = env.action_space.sample()
@@ -181,7 +222,7 @@ for k in range(NUM_EPISODES):
         action_probs_orig = action_probs
 
         # FOR EXPLORATION:
-        # action_probs = F.dropout(action_probs, p=0.3, training=True)
+        action_probs = F.dropout(action_probs, p=0.3, training=True)
 
         action_probs = F.softmax(action_probs, dim=1)
 
@@ -195,14 +236,17 @@ for k in range(NUM_EPISODES):
         # Execute action in environment.
 
         if k % 1000 == 0:
-            print("action_probs_orig ")
-            print(action_probs_orig)
-            print("On state=" + str(observation) + ", selected action=" + str(action.item()) + " , ")
+            #print("action_probs_orig ")
+            #print(action_probs_orig)
+            print("Time of day=" + str(time_of_day) + ", on state=" + str(get_state_as_pair(observation)) +
+                  ", selected action=" + str(get_state_as_pair(get_state_from_int(action.item()))) + " ,")
+
+        time_of_day += 1
 
         observation, reward, done, info = env.step(action.item())
 
         if k % 1000 == 0:
-            print("new state=" + str(observation) + ", done=" + str(done))
+            print("new state=" + str(get_state_as_pair(observation)) + ", rewards=" + str(reward) + ", done=" + str(done))
 
         # if done and reward != 1.0:
         # 	if observation == 5 or observation == 7 or observation == 11 or observation == 12:
@@ -211,21 +255,25 @@ for k in range(NUM_EPISODES):
         step_data = [get_state_repr(observation), action, log_prob, reward, done, info]
         episode_series.append(step_data)
         last_reward = reward
+        reward_acum.append(reward)
+
 
     # END WHILE SIMULATION
 
+    reward_chart.append(np.sum(reward_acum))
+
     if len(score) < 100:
-        score.append(reward)
+        score.append(np.sum(reward_acum))
     else:
-        score[k % 100] = reward
+        score[k % 100] = np.sum(reward_acum)
 
     if k % 1000 == 0:
         print(
         "Episode {} finished after {} timesteps with r={}. Running score: {}. Times trained: {}. Times reached goal: {}.".format(
-            k, len(episode_series), reward, np.mean(score), times_trained, times_reach_goal))
+            k, len(episode_series), np.sum(reward_acum), np.mean(score), times_trained, times_reach_goal))
         times_trained = 0
         times_reach_goal = 0
-        print_table()
+        #print_table()
     # print("Game finished. " + "-" * 5)
     # print(len(episode_series))
     #         for param in net.parameters():
@@ -293,3 +341,12 @@ for k in range(NUM_EPISODES):
 
     if reward > 0.0:
         times_reach_goal = times_reach_goal + 1
+
+
+import matplotlib.pyplot as plt
+import matplotlib
+
+chart = plt.plot(reward_chart)
+#chart.title("plot")
+
+plt.show()
