@@ -8,17 +8,20 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 import gym
 from gym.envs.registration import register
-# register(
-#     id='FrozenLakeNotSlippery-v0',
-#     entry_point='gym.envs.toy_text:FrozenLakeEnv',
-#     kwargs={'map_name' : '4x4', 'is_slippery': False},
-#     max_episode_steps=100,
-#     reward_threshold=0.78, # optimum = .8196
-# )
+register(
+    id='FrozenLakeNotSlippery-v0',
+    entry_point='gym.envs.toy_text:FrozenLakeEnv',
+    kwargs={'map_name' : '4x4', 'is_slippery': False},
+    max_episode_steps=100,
+    reward_threshold=0.78, # optimum = .8196
+)
+
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #env = gym.make('FrozenLake8x8-v0')
-env = gym.make('FrozenLake-v0')
-#env = gym.make('FrozenLakeNotSlippery-v0')
+#env = gym.make('FrozenLake-v0')
+env = gym.make('FrozenLakeNotSlippery-v0')
 env.render()
 class pi_net(nn.Module):
     def __init__(self):
@@ -131,17 +134,18 @@ import numpy as np
 import torch.optim as optim
 from torch.distributions import Categorical
 
-NUM_EPISODES = 1000000
-GAMMA = 0.99
-net = pi_net()
+NUM_EPISODES = 5000
+GAMMA = 0.95
+net = pi_net().to(device)
 net.apply(weights_init_1st)
-optimizer = optim.RMSprop(net.parameters(), lr=0.000001)
+optimizer = optim.RMSprop(net.parameters(), lr=0.0001)
 
 
 
-FloatTensor =  torch.FloatTensor
-LongTensor = torch.LongTensor
-ByteTensor = torch.ByteTensor
+use_cuda = torch.cuda.is_available
+FloatTensor = torch.cuda.FloatTensor if use_cuda else torch.FloatTensor
+LongTensor = torch.cuda.LongTensor if use_cuda else torch.LongTensor
+ByteTensor = torch.cuda.ByteTensor if use_cuda else torch.ByteTensor
 
 def print_table():
     for i in range(16):
@@ -161,6 +165,7 @@ def print_table():
 
 
 score = []
+res = {}
 times_trained = 0
 times_reach_goal = 0
 for k in range(NUM_EPISODES):
@@ -176,7 +181,7 @@ for k in range(NUM_EPISODES):
         np_observation = get_state_repr(observation)
         # np_observation = np.expand_dims(np_observation, axis=0)
         np_observation = np.expand_dims(np_observation, axis=0)
-        observation_tensor = torch.FloatTensor(np_observation)
+        observation_tensor = FloatTensor(np_observation)
 
         action_probs = net(observation_tensor)
         action_probs_orig = action_probs
@@ -219,6 +224,9 @@ for k in range(NUM_EPISODES):
         score.append(reward)
     else:
         score[k % 100] = reward
+
+    if k % 100 == 0:
+        res[k] = np.mean(score)
 
     if k % 1000 == 0:
         print(
@@ -294,3 +302,10 @@ for k in range(NUM_EPISODES):
 
     if reward > 0.0:
         times_reach_goal = times_reach_goal + 1
+
+print("RESULTS")
+
+kk = sorted(res)
+
+for key in kk:
+    print(str(key) + " " + str(res[key]))
