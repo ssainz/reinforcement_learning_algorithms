@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="395f9e16-96f8-4641-aff5-db125d0ac7ab" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DDQN.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN_ZScore_Norm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_Actor_Critic_Batch_NoReplacement.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Frozen_Lake_DQN-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Frozen_Lake_DQN-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frozen_Lake_DQN.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Frozen_Lake_DQN.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_Monte_Carlo_Policy_Gradient_non_Jupyter.py" beforeDir="false" afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_Monte_Carlo_Policy_Gradient_non_Jupyter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN_ZScore_Norm.py" beforeDir="false" afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN_ZScore_Norm.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,7 +58,7 @@
       <updated>1553656408036</updated>
       <workItem from="1579144723047" duration="1790000" />
       <workItem from="1579149830189" duration="801000" />
-      <workItem from="1579459126900" duration="9523000" />
+      <workItem from="1579459126900" duration="14943000" />
     </task>
     <servers />
   </component>

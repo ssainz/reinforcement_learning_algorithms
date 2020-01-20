@@ -92,7 +92,7 @@ def weights_init(m):
     if classname.find('Linear') != -1:
         # m.weight.data.normal_(0.0, 0.02)
         # m.weight.data.uniform_(0.0, 0.02)
-        m.weight.data.fill_(0.5)
+        m.weight.data.normal_(0.0, 0.15)
 
 def get_state_repr(state_idx):
     state = np.zeros(16)
@@ -105,20 +105,20 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 mse = nn.MSELoss()
 NUM_EPISODES = 500000
 BATCH_SIZE = 500
-GAMMA = 0.99
+GAMMA = 0.9
 TARGET_UPDATE = 50
 EPS_START = 0.95
 EPS_END = 0.00
-EPS_DECAY = 100000
+EPS_DECAY = 1000000
 online_net = q_net().to(device)
 online_net.apply(weights_init)
 target_net = q_net().to(device)
 target_net.load_state_dict(online_net.state_dict())
 target_net.eval()
 
-memory = ReplayMemory(10000)
-optimizer = optim.RMSprop(online_net.parameters(), lr=0.01)
-
+memory = ReplayMemory(100000)
+#optimizer = optim.RMSprop(online_net.parameters(), lr=0.01)
+optimizer = optim.Adam(online_net.parameters(), lr=0.001)
 
 def optimize_model():
     if len(memory) < BATCH_SIZE:
