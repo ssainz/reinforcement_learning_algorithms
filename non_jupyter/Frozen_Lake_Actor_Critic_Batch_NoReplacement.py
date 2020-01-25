@@ -239,6 +239,9 @@ def get_state_repr(state_idx):
     state[state_idx] = 1
     return state
 
+def get_index_repr(state):
+    return np.argwhere(state==1).item()
+
 # if gpu is to be used
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -296,8 +299,10 @@ def optimize(k):
     batch = Transition(*zip(*transitions))
 
     # Compute a mask of non-final states and concatenate the batch elements
-    final_mask = torch.tensor(tuple(map(lambda d: d is True,batch.done)), device=device, dtype=torch.bool).unsqueeze(1)
-    final_mask_list = [d for d in batch.done if d is True]
+    # final_mask = torch.tensor(tuple(map(lambda d: d is True,batch.done)), device=device, dtype=torch.bool).unsqueeze(1)
+    # final_mask_list = [d for d in batch.done if d is True]
+    final_mask = torch.tensor(tuple(map(lambda d: get_index_repr(d) in [5,7,11,12], batch.next_state)), device=device, dtype=torch.bool).unsqueeze(1)
+    final_mask_list = [d for d in batch.done if get_index_repr(d) in [5,7,11,12]]
     # Compute states that are final.
     #     next_state_final_mask = torch.tensor(tuple(map(lambda d: (d) in [5,7,11,12,15],
     #                                           batch.next_state)), device=device, dtype=torch.uint8).unsqueeze(1)
