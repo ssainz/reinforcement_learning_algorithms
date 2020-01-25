@@ -2,6 +2,18 @@ from collections import namedtuple
 Transition = namedtuple('Transition',
                         ('state', 'action', 'next_state', 'reward','done'))
 
+def print_q_table():
+    for i in range(16):
+
+        q_vals = online_net(FloatTensor(get_state_repr(i)))
+        outp = " state (" + str(i) + ") "
+        n = 0
+        for tensr in q_vals:
+            for cell in tensr:
+                outp = outp + " A[" + str(n) + "]:(" + str(cell.item()) + ")"
+                n += 1
+        print(outp)
+
 
 class ReplayMemory(object):
 
@@ -73,18 +85,19 @@ class q_net(nn.Module):
         x_std = torch.sum(torch.pow(x_minus_x_avg, 2)) / 20
         epsilon = 0.0000001
         x_norm = (x_minus_x_avg) / (torch.sqrt(x_std) + epsilon)
-        x = torch.relu(x_norm)
+        x = torch.tanh(x_norm)
 
         x = self.linear2(x)
 
-        x_avg = torch.sum(x) / 40
-        x_minus_x_avg = x - x_avg
-        x_std = torch.sum(torch.pow(x_minus_x_avg, 2)) / 20
-        epsilon = 0.0000001
-        x_norm = (x_minus_x_avg) / (torch.sqrt(x_std) + epsilon)
-        x = torch.relu(x_norm)
+        # x_avg = torch.sum(x) / 40
+        # x_minus_x_avg = x - x_avg
+        # x_std = torch.sum(torch.pow(x_minus_x_avg, 2)) / 20
+        # epsilon = 0.0000001
+        # x_norm = (x_minus_x_avg) / (torch.sqrt(x_std) + epsilon)
+        x = torch.tanh(x)
 
         x = self.linear3(x)
+        #x = torch.tanh(x)
         x = x.view(-1, 4)
         return x
 
@@ -103,12 +116,17 @@ def weights_init(m):
     if classname.find('Linear') != -1:
         # m.weight.data.normal_(0.0, 0.02)
         # m.weight.data.uniform_(0.0, 0.02)
-        m.weight.data.normal_(0.0, 0.15)
+        m.weight.data.normal_(0.0, 0.02)
+        if not m.bias is None:
+            m.bias.data.normal_(0.0, 0.02)
 
 def get_state_repr(state_idx):
     state = np.zeros(16)
     state[state_idx] = 1
     return state
+
+def get_index_repr(state):
+    return np.argwhere(state==1).item()
 
 
 # if gpu is to be used
@@ -117,19 +135,19 @@ mse = nn.MSELoss()
 NUM_EPISODES = 500000
 BATCH_SIZE = 500
 GAMMA = 0.99
-TARGET_UPDATE = 50
+TARGET_UPDATE = 10
 EPS_START = 0.95
 EPS_END = 0.00
-EPS_DECAY = 1000000
+EPS_DECAY = 100000
 online_net = q_net().to(device)
 online_net.apply(weights_init)
 target_net = q_net().to(device)
 target_net.load_state_dict(online_net.state_dict())
 target_net.eval()
 
-memory = ReplayMemory(100000)
+memory = ReplayMemory(1000)
 #optimizer = optim.RMSprop(online_net.parameters(), lr=0.001)
-optimizer = optim.Adam(online_net.parameters(), lr=0.001)
+optimizer = optim.Adam(online_net.parameters(), lr=0.000001)
 
 def optimize_model():
     if len(memory) < BATCH_SIZE:
@@ -140,13 +158,14 @@ def optimize_model():
     batch = Transition(*zip(*transitions))
 
     # Compute a mask of non-final states and concatenate the batch elements
-    non_final_mask = torch.tensor(tuple(map(lambda d: d is False,
-                                            batch.done)), device=device, dtype=torch.bool).unsqueeze(1)
-    # final_mask = torch.tensor(tuple(map(lambda d: d is False,
-    #                                      batch.done)), device=device, dtype=torch.uint8).unsqueeze(1)
+    #non_final_mask = torch.tensor(tuple(map(lambda d: d is False,
+    #                                        batch.done)), device=device, dtype=torch.bool).unsqueeze(1)
+    non_final_mask = torch.tensor(tuple(map(lambda d: not get_index_repr(d) in [5, 7, 11, 12], batch.next_state)),device=device, dtype=torch.bool).unsqueeze(1)
 
+    # non_final_next_states = torch.cat([FloatTensor([s]) for s, d in zip(batch.next_state, batch.done)
+    #                                    if d is False])
     non_final_next_states = torch.cat([FloatTensor([s]) for s, d in zip(batch.next_state, batch.done)
-                                       if d is False])
+                                       if not get_index_repr(s) in [5, 7, 11, 12]])
 
     # state_batch = torch.cat([torch.FloatTensor([s]) for s in batch.state])
     state_batch = FloatTensor(batch.state)
@@ -178,7 +197,8 @@ def optimize_model():
 
     # Compute Huber loss (this is like MSE , but less sensitive to outliers )
     # loss = F.smooth_l1_loss(state_action_values, expected_state_action_values.unsqueeze(1))
-    loss = F.smooth_l1_loss(state_action_values, expected_state_action_values)
+    # loss = F.smooth_l1_loss(state_action_values, expected_state_action_values)
+    loss = mse(state_action_values, expected_state_action_values)
 
     # Optimize the model
     optimizer.zero_grad()
@@ -187,10 +207,12 @@ def optimize_model():
         param.grad.data.clamp_(-1, 1)
     optimizer.step()
 
+    return loss.item()
 
 score = []
 times_trained = 0
 times_reach_goal = 0
+q_loss_avg = [1.0]
 
 steps_done = 0
 for k in range(NUM_EPISODES):
@@ -225,26 +247,28 @@ for k in range(NUM_EPISODES):
         # break
         # Execute action in environment.
         old_state = observation
-        if k % 1000 == 0:
-            print("q_values ")
-            print(q_values)
-            print("On state=" + str(observation) + ", selected action=" + str(action.item()) + " , ")
-
         observation, reward, done, info = env.step(action.item())
         new_state = observation
 
         # Store the transition in memory
         memory.push(get_state_repr(old_state), action, get_state_repr(new_state), reward, done)
 
-        if k % 1000 == 0:
-            print("new state=" + str(observation) + ", done=" + str(done))
-        # if done and reward != 1.0:
-        #    reward = -1.0
 
         # Perform one step of the optimization (on the target network)
         if k > BATCH_SIZE:
-            optimize_model()
+            q_loss_val = optimize_model()
             times_trained = times_trained + 1
+            q_loss_avg.append(q_loss_val)
+
+        # if k > 100 and done and new_state in [5, 7, 11, 12]:
+        #     # print("old_state != new_state")
+        #     # print(old_state != new_state)
+        #     # print("oldstate " + str(old_state) + " newstate " + str(new_state))
+        #     print("On state=" + str(old_state) + ", selected action=" + str(action.item()))
+        #     print("new state=" + str(new_state) + ", done=" + str(done) + \
+        #           ". Reward: " + str(reward))
+        #     exit()
+
         # env.render()
     if k % TARGET_UPDATE == 0 and k > BATCH_SIZE:
         target_net.load_state_dict(online_net.state_dict())
@@ -255,9 +279,10 @@ for k in range(NUM_EPISODES):
         score[k % 100] = reward
 
     if k > BATCH_SIZE and k % 1000 == 0:
+        print_q_table()
         print(
-            "Episode {} finished after {} timesteps with r={}. Running score: {}. Times trained: {}. Times reached goal: {}.Epsilon: {}".format(
-                k, steps_done_in_episode, reward, np.mean(score), times_trained, times_reach_goal, eps_threshold))
+            "Episode {} finished after {} timesteps with r={}. Running score: {}. Times trained: {}. Times reached goal: {}.Epsilon: {}, QLoss: {}".format(
+                k, steps_done_in_episode, reward, np.mean(score), times_trained, times_reach_goal, eps_threshold, np.mean(q_loss_avg)))
         times_trained = 0
         times_reach_goal = 0
         # print("Game finished. " + "-" * 5)
@@ -267,5 +292,6 @@ for k in range(NUM_EPISODES):
 
     if reward > 0.0:
         times_reach_goal = times_reach_goal + 1
+
 
 

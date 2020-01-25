@@ -37,66 +37,65 @@ Tensor = FloatTensor
 class value_net(nn.Module):
     def __init__(self):
         super(value_net, self).__init__()
-        self.linear1 = nn.Linear(1, 40)
-        # self.batch1 = nn.BatchNorm1d(40)
-        self.linear2 = nn.Linear(40, 40, bias=True)
-        # self.batch2 = nn.BatchNorm1d(40)
-        self.linear3 = nn.Linear(40, 40, bias=True)
-        # self.batch2 = nn.BatchNorm1d(40)
-        self.linear4 = nn.Linear(40, 40, bias=True)
-        # self.batch2 = nn.BatchNorm1d(40)
-        self.linear5 = nn.Linear(40, 1, bias=False)
+        bias_on = True
+        self.linear1 = nn.Linear(16, 20, bias=bias_on)
+        self.linear2 = nn.Linear(20, 40, bias=bias_on)
+        self.linear3 = nn.Linear(40, 1, bias=bias_on)
         # self.dropout = nn.Dropout(p=0.5)
 
     def forward(self, x):
-        #         print("Q_Net: Input " + "-" *5)
-        #         print(x.shape)
-        #         print(x)
-        #         print("Q_Net: Input " + "-" *5)
-        x = x.view(-1, 1)
-        x = F.sigmoid(self.linear1(x))
-        # x = F.softmax(self.linear2(x), dim=0)
-        # x = self.batch1(x)
-        # x = self.dropout(x)
-        x = F.sigmoid(self.linear2(x))
-        x = F.sigmoid(self.linear3(x))
-        x = F.sigmoid(self.linear4(x))
-        # x = self.batch2(x)
-        x = self.linear5(x)
-        x = x.view(-1, 1)
-        # print(x.shape)
-        # print(x)
-        return x
+        # --- 0000 ---- 0000 >>>  z-score normalization
+        x = self.linear1(x)
+
+        x_avg = torch.sum(x) / 20
+        x_minus_x_avg = x - x_avg
+        x_std = torch.sum(torch.pow(x_minus_x_avg, 2)) / 20
+        epsilon = 0.0000001
+        x_norm = (x_minus_x_avg) / (torch.sqrt(x_std) + epsilon)
+        x = torch.tanh(x_norm)
+
+        x = self.linear2(x)
+
+        # x_avg = torch.sum(x) / 40
+        # x_minus_x_avg = x - x_avg
+        # x_std = torch.sum(torch.pow(x_minus_x_avg, 2)) / 40
+        # x_norm = (x_minus_x_avg) / (torch.sqrt(x_std) + epsilon)
+        x = torch.tanh(x)
+        x = self.linear3(x)
+
+
+        return x.view(-1, 1)
 
 
 class policy_net(nn.Module):
     def __init__(self):
         super(policy_net, self).__init__()
-        # self.batch1 = nn.BatchNorm1d(1)
-        self.linear1 = nn.Linear(1, 64)
-        # self.batch2 = nn.BatchNorm1d(64)
-        self.linear2 = nn.Linear(64, 64)
-        self.linear3 = nn.Linear(64, 64)
-        self.linear4 = nn.Linear(64, 64)
-        self.linear5 = nn.Linear(64, 4, bias=False)
+        bias_on = True
+        self.linear1 = nn.Linear(16, 20, bias=bias_on)
+        self.linear2 = nn.Linear(20, 40, bias=bias_on)
+        self.linear3 = nn.Linear(40, 4, bias=bias_on)
         # self.dropout = nn.Dropout(p=0.5)
 
     def forward(self, x):
-        # print(x.shape)
-        # print(x
-        x = x.view(-1, 1)
-        # x = self.batch1(x)
-        x = F.tanh(self.linear1(x))
-        # x = self.batch2(x)
-        # x = self.dropout()
-        x = F.sigmoid(self.linear2(x))
-        #         x = F.tanh(self.linear3(x))
-        #         x = F.tanh(self.linear4(x))
-        x = self.linear5(x)
-        x = x.view(-1, 4)
-        # print(x.shape)
-        # print(x)
-        return x
+        # --- 0000 ---- 0000 >>>  z-score normalization
+        x = self.linear1(x)
+
+        x_avg = torch.sum(x) / 20
+        x_minus_x_avg = x - x_avg
+        x_std = torch.sum(torch.pow(x_minus_x_avg, 2)) / 20
+        epsilon = 0.0000001
+        x_norm = (x_minus_x_avg) / (torch.sqrt(x_std) + epsilon)
+        x = torch.tanh(x_norm)
+
+        x = self.linear2(x)
+
+        # x_avg = torch.sum(x) / 40
+        # x_minus_x_avg = x - x_avg
+        # x_std = torch.sum(torch.pow(x_minus_x_avg, 2)) / 40
+        # x_norm = (x_minus_x_avg) / (torch.sqrt(x_std) + epsilon)
+        x = torch.tanh(x)
+        x = self.linear3(x)
+        return x.view(-1, 4)
 
 
 from collections import namedtuple
@@ -176,8 +175,9 @@ class ReplayMemoryNew(object):
 
 def print_v_table():
     for i in range(16):
-        st = np.array(get_state_repr(i))
-        st = np.expand_dims(st, axis=0)
+        # st = np.array(get_state_repr(i))
+        # st = np.expand_dims(st, axis=0)
+        st = get_state_repr(i)
         v_net.eval()
         action_probs = v_net(FloatTensor(st))
         # action_probs = F.softmax(action_probs, dim=1)
@@ -192,8 +192,9 @@ def print_v_table():
 
 def print_pi_table():
     for i in range(16):
-        st = np.array(get_state_repr(i))
-        st = np.expand_dims(st, axis=0)
+        # st = np.array(get_state_repr(i))
+        # st = np.expand_dims(st, axis=0)
+        st = get_state_repr(i)
         pi_net.eval()
         action_probs = pi_net(FloatTensor(st))
         action_probs = F.softmax(action_probs, dim=1)
@@ -206,8 +207,8 @@ def print_pi_table():
         print(outp)
 
 
-def get_state_repr(state_idx):
-    return state_idx * 13
+# def get_state_repr(state_idx):
+#     return state_idx * 13
 
 
 import gym
@@ -228,15 +229,15 @@ def weights_init(m):
     # print classname
     # print q_net
     if classname.find('Linear') != -1:
-        m.weight.data.normal_(0.01, 0.02)
-        # if not m.bias is None:
-        #    m.bias.data.normal_(0.1, 0.02)
-        # m.weight.data.uniform_(0.0, 0.02)
-        # m.weight.data.fill_(0.01)
+        m.weight.data.normal_(0.0, 0.02)
         if not m.bias is None:
-            m.bias.data.fill_(0.0)
-        print(m)
+            m.bias.data.normal_(0.0, 0.02)
 
+
+def get_state_repr(state_idx):
+    state = np.zeros(16)
+    state[state_idx] = 1
+    return state
 
 # if gpu is to be used
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -246,9 +247,10 @@ GAMMA = 0.99
 TARGET_UPDATE = 1000
 PRINT_OUT_TIMES = 1000
 ENTROPY_REDUCTION_STEPS = 100000.0
-NUM_EPISODES = 1000000
+NUM_EPISODES = 10000000
 # NUM_STEPS_VALUE_FUNCTION_LEARNS = NUM_EPISODES
-NUM_STEPS_VALUE_FUNCTION_LEARNS = (ENTROPY_REDUCTION_STEPS * 1)
+#NUM_STEPS_VALUE_FUNCTION_LEARNS = (ENTROPY_REDUCTION_STEPS * 1)
+NUM_STEPS_VALUE_FUNCTION_LEARNS = 1
 
 v_net = value_net()
 v_net.apply(weights_init)
@@ -271,7 +273,7 @@ pi_net.apply(weights_init).to(device)
 
 
 v_optimizer = optim.Adam(v_net.parameters(), lr=0.0001)
-pi_optimizer = optim.Adam(pi_net.parameters(), lr=0.0001)
+pi_optimizer = optim.Adam(pi_net.parameters(), lr=0.00001)
 
 # scheduler = StepLR(v_optimizer, step_size=10000, gamma=0.5)
 
@@ -304,9 +306,9 @@ def optimize(k):
     # Unpack the parameters from the memory
 
     state_batch = FloatTensor(batch.state)
-    state_batch = state_batch.view(BATCH_SIZE, 1)
+    state_batch = state_batch.view(BATCH_SIZE, 16)
     next_state_batch = FloatTensor(batch.next_state)
-    next_state_batch = next_state_batch.view(BATCH_SIZE, 1)
+    next_state_batch = next_state_batch.view(BATCH_SIZE, 16)
     action_batch = LongTensor(batch.action).view(BATCH_SIZE, 1)
     reward_batch = Tensor(batch.reward).view(BATCH_SIZE, 1)
     entropy_impact_batch = FloatTensor(batch.entropy_impact).view(BATCH_SIZE, 1)
@@ -339,21 +341,26 @@ def optimize(k):
     ##HACK FIXING expected value
 
     # calculate V(current_state)
-    if k <= NUM_STEPS_VALUE_FUNCTION_LEARNS:
-        v_net.train()
-    else:
-        v_net.eval()
+    #if k <= NUM_STEPS_VALUE_FUNCTION_LEARNS:
+    #    v_net.train()
+    #else:
+    #    v_net.eval()
+    v_net.train()
 
     v_current = v_net(state_batch)
 
     # backpropagate:
     value_loss = torch.sum((expected_value - v_current) ** 2)
 
-    if k <= NUM_STEPS_VALUE_FUNCTION_LEARNS:
-        v_optimizer.zero_grad()
-        # value_loss.backward(retain_graph=True) # keep graph for policy net optimizer
-        value_loss.backward()  # keep graph for policy net optimizer
-        v_optimizer.step()
+    v_optimizer.zero_grad()
+    value_loss.backward()  # keep graph for policy net optimizer
+    v_optimizer.step()
+
+    # if k <= NUM_STEPS_VALUE_FUNCTION_LEARNS:
+    #     v_optimizer.zero_grad()
+    #     # value_loss.backward(retain_graph=True) # keep graph for policy net optimizer
+    #     value_loss.backward()  # keep graph for policy net optimizer
+    #     v_optimizer.step()
         # scheduler.step()
 
     value_loss_cum.append(value_loss.item())
@@ -382,7 +389,8 @@ def optimize(k):
 
     entropy = entropy_impact_batch * torch.sum(actions_prob_batch * log_actions_prob_batch)
 
-    policy_loss = torch.sum(-log_prob_batch * (expected_value - v_current) + entropy)
+    #policy_loss = torch.sum(-log_prob_batch * (expected_value - v_current) + entropy)
+    policy_loss = torch.sum(-log_prob_batch * (expected_value - v_current))
 
     pi_optimizer.zero_grad()
     policy_loss.backward()
@@ -429,8 +437,9 @@ for k in range(NUM_EPISODES):
         steps_done += 1
 
         # Get action from pi
-        np_observation = np.array(get_state_repr(observation))
-        np_observation = np.expand_dims(np_observation, axis=0)
+        # np_observation = np.array(get_state_repr(observation))
+        # np_observation = np.expand_dims(np_observation, axis=0)
+        np_observation = get_state_repr(observation)
         # print(np_observation)
         observation_tensor = FloatTensor(np_observation)
 

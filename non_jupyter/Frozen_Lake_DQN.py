@@ -214,10 +214,6 @@ for k in range(NUM_EPISODES):
         # break
         # Execute action in environment.
         old_state = observation
-        if k % 1000 == 0:
-            print("q_values ")
-            print(q_values)
-            print("On state=" + str(observation) + ", selected action=" + str(action.item()) + " , ")
 
         observation, reward, done, info = env.step(action.item())
         new_state = observation
@@ -225,8 +221,6 @@ for k in range(NUM_EPISODES):
         # Store the transition in memory
         memory.push(get_state_repr(old_state), action, get_state_repr(new_state), reward, done)
 
-        if k % 1000 == 0:
-            print("new state=" + str(observation) + ", done=" + str(done))
         # if done and reward != 1.0:
         #    reward = -1.0
 
