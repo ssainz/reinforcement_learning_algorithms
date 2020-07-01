@@ -78,16 +78,19 @@ class FleetEnv():
         if self.time == 8:
 
             # High rewards in core
-
+            for i in range(0, self.len ):
+                for j in range(0, self.len ):
+                    self.rewards[i, j] = 0.0
 
             center = int(round((self.len - 1) / 2))
 
             for i in range(center - 1, center + 2):
                 for j in range(center - 1, center + 2):
-                    self.rewards[i, j] = np.random.normal(self.low_mean, self.low_std)
+                    #self.rewards[i, j] = np.random.normal(self.low_mean, self.low_std)
+                    self.rewards[i, j] = 5
 
 
-            self.rewards[center, center] = np.random.normal(self.high_mean, self.high_std)
+            self.rewards[center, center] = 10
 
 
         if self.time == 20:
@@ -95,7 +98,8 @@ class FleetEnv():
             # High rewards in border
             for i in range(0, self.len):
                 for j in range(0, self.len):
-                    self.rewards[i, j] = np.random.normal(self.low_mean, self.low_std)
+                    #self.rewards[i, j] = np.random.normal(self.low_mean, self.low_std)
+                    self.rewards[i, j] = 5
 
 
             for i in range(1, self.len - 1):
@@ -103,7 +107,24 @@ class FleetEnv():
                     self.rewards[i, j] = 0.0
 
 
-        else:
-            for i in range(0, self.len ):
-                for j in range(0, self.len ):
-                    self.rewards[i, j] = 0.0
+        #else:
+        #    for i in range(0, self.len ):
+        #        for j in range(0, self.len ):
+        #            self.rewards[i, j] = 0.0
+
+def print_table():
+    for i in range(36):
+        st = np.array(get_state_repr_from_int(i))
+        st = np.expand_dims(st, axis=0)
+        net.eval()
+        action_probs = net(FloatTensor(st))
+        action_probs = F.softmax(action_probs, dim=1)
+        outp = " state (" + str(i) + ") "
+        n = 0
+        for tensr in action_probs:
+            for cell in tensr:
+                outp = outp + " A[" + str(n) + "]:(" + str(cell.item()) + ")"
+                n += 1
+        print(outp)
+
+    print("--------------")

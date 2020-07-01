@@ -5,6 +5,30 @@ import torch.nn as nn
 import torch
 import torch.nn.functional as F
 
+# custom weights initialization
+def weights_init_1st(m):
+    classname = m.__class__.__name__
+    if classname.find('Linear') != -1:
+        m.weight.data.normal_(0.0, 0.15)
+        #m.weight.data.uniform_(-0.15, 0.15)
+        #m.weight.data.fill_(0.5)
+
+def weights_init_2nd(m):
+    classname = m.__class__.__name__
+    if classname.find('Linear') != -1:
+        m.weight.data.normal_(-0.3, 0.3)
+        #m.weight.data.uniform_(0.01, 0.02)
+        #m.weight.data.fill_(0.5)
+
+def print_net(model):
+    for name, param in model.named_parameters():
+        if param.requires_grad:
+            print(name, param.data.numpy())
+
+def get_pi_net():
+    net = pi_net()
+    net.apply(weights_init_1st)
+    return net
 
 class pi_net(nn.Module):
     def __init__(self):
