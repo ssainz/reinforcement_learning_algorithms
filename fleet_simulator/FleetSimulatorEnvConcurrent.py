@@ -96,16 +96,19 @@ class FleetEnv():
         if self.time == 8:
 
             # High rewards in core
-
+            for i in range(0, self.len ):
+                for j in range(0, self.len ):
+                    self.rewards[i, j] = 0.0
 
             center = int(round((self.len - 1) / 2))
 
             for i in range(center - 1, center + 2):
                 for j in range(center - 1, center + 2):
-                    self.rewards[i, j] = np.random.normal(self.low_mean, self.low_std)
+                    #self.rewards[i, j] = np.random.normal(self.low_mean, self.low_std)
+                    self.rewards[i, j] = 5
 
 
-            self.rewards[center, center] = np.random.normal(self.high_mean, self.high_std)
+            self.rewards[center, center] = 10
 
 
         if self.time == 20:
@@ -113,7 +116,8 @@ class FleetEnv():
             # High rewards in border
             for i in range(0, self.len):
                 for j in range(0, self.len):
-                    self.rewards[i, j] = np.random.normal(self.low_mean, self.low_std)
+                    #self.rewards[i, j] = np.random.normal(self.low_mean, self.low_std)
+                    self.rewards[i, j] = 5
 
 
             for i in range(1, self.len - 1):
@@ -121,7 +125,7 @@ class FleetEnv():
                     self.rewards[i, j] = 0.0
 
 
-        else:
-            for i in range(0, self.len ):
-                for j in range(0, self.len ):
-                    self.rewards[i, j] = 0.0
+        #else:
+        #    for i in range(0, self.len ):
+        #        for j in range(0, self.len ):
+        #            self.rewards[i, j] = 0.0

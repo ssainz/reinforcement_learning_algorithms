@@ -1,90 +1,30 @@
 from Models import pi_net
 import torch.optim as optim
 from torch.distributions import Categorical
-
-# custom weights initialization
-def weights_init_1st(m):
-    classname = m.__class__.__name__
-    if classname.find('Linear') != -1:
-        m.weight.data.normal_(0.0, 0.15)
-        #m.weight.data.uniform_(-0.15, 0.15)
-        #m.weight.data.fill_(0.5)
-
-def get_state_repr_from_int(state_idx):
-
-    city = np.zeros((6,6))
-
-    row = int(state_idx / 6)
-    col = state_idx % 6
-    city[row,col] = 1
-
-    return get_state_repr(city)
-
-def get_state_from_int(state_idx):
-
-    city = np.zeros((6,6))
-
-    row = int(state_idx / 6)
-    col = state_idx % 6
-    city[row,col] = 1
-
-    return city
-
-
-def get_state_as_int(state):
-
-    rows = state.shape[0]
-    cols = state.shape[1]
-    r = 0
-    c = 0
-    for i in range(rows):
-        for j in range(cols):
-            if state[i,j] == 1:
-                return state.shape[0] * i + j
-
-def get_state_repr(state_repr):
-    state = state_repr.flatten()
-    return state
-
-def get_state_as_pair(state):
-    rows = state.shape[0]
-    cols = state.shape[1]
-    r = 0
-    c = 0
-    for i in range(rows):
-        for j in range(cols):
-            if state[i,j] == 1:
-                c = j
-                r = i
-    return "(" + str(r) + "," + str(c) + ")"
+from utils import weights_init_1st, get_state_repr_from_int, get_state_from_int, get_state_as_int, get_state_repr, get_state_as_pair
 
 
 FloatTensor =  torch.FloatTensor
 LongTensor = torch.LongTensor
 ByteTensor = torch.ByteTensor
 
-
-
-
 class Agent():
 
-    def __init__(self,  agent_id, sending_queue, response_queue, episodes):
+    def __init__(self,  agent_id, sending_queue, response_queue, episodes, exp_conf):
         self.agent_id = agent_id
         self.action_queue = sending_queue
         self.continue_queue = response_queue
         self.episodes = episodes
-        self.net = pi_net()
-        self.GAMMA = 0.99
-        self.net = pi_net()
+        self.net = exp_conf['net']
+        self.DEBUG = exp_conf["DEBUG"]
+        self.GAMMA = exp_conf['gamma']
         self.net.apply(weights_init_1st)
-        self.optimizer = optim.RMSprop(net.parameters(), lr=0.000001)
+        self.optimizer = optim.RMSprop(net.parameters(), lr=exp_conf['gamma'])
 
     def reset(self):
         print "reset"
 
     def start(self):
-
-
 
         for episode in self.episodes:
             observation = np.zeros((6,6))
@@ -116,7 +56,7 @@ class Agent():
                 # break
                 # Execute action in environment.
 
-                if k % 1000 == 0:
+                if k % 1000 == 0 and DEBUG:
                     # print("action_probs_orig ")
                     # print(action_probs_orig)
                     print("Time of day=" + str(time_of_day) + ", on state=" + str(get_state_as_pair(observation)) +
@@ -130,7 +70,7 @@ class Agent():
                 # waiting for result:
                 observation, reward, done, info = self.continue_queue.get()
 
-                if k % 1000 == 0:
+                if k % 1000 == 0 and DEBUG:
                     print(
                     "new state=" + str(get_state_as_pair(observation)) + ", rewards=" + str(reward) + ", done=" + str(
                         done))
@@ -148,12 +88,12 @@ class Agent():
 
             reward_chart.append(np.sum(reward_acum))
 
-            if len(score) < 100:
+            if len(score) < 100 :
                 score.append(np.sum(reward_acum))
             else:
                 score[k % 100] = np.sum(reward_acum)
 
-            if k % 1000 == 0:
+            if k % 1000 == 0 and DEBUG:
                 print(
                     "Episode {} finished after {} timesteps with r={}. Running score: {}. Times trained: {}. Times reached goal: {}.".format(
                         k, len(episode_series), np.sum(reward_acum), np.mean(score), times_trained, times_reach_goal))
