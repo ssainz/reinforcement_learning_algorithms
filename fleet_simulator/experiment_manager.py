@@ -24,7 +24,10 @@ experiment_1 = {
 }
 
 #Experiments SETUP
-#experiments.append(experiment_1)
+experiments.append(experiment_1)
+experiments.append(experiment_1)
+experiments.append(experiment_1)
+experiments.append(experiment_1)
 
 iterations = [20000]
 net_generators = [get_pi_net]
@@ -42,7 +45,7 @@ for it in iterations:
                     'lr': lr,
                     'DEBUG': False
                 }
-                experiments.append(cf)
+                #experiments.append(cf)
 
 results = []
 names = []
@@ -55,8 +58,8 @@ for exp in experiments:
 
 #Plotting
 pref = str(datetime.datetime.now())
-res = split(results, 10) #splits in sets of five
-nam = split(names, 5)
+res = split(results, 2) #splits in sets of five
+nam = split(names, 2)
 i = 0
 for results, names in zip(res, nam):
     i += 1

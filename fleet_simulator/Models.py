@@ -3,6 +3,7 @@ import torchvision
 import random
 import torch.nn as nn
 import torch
+from torch import tanh
 import torch.nn.functional as F
 
 # custom weights initialization
@@ -64,7 +65,7 @@ class pi_net(nn.Module):
         # print(x_norm)
         # print("BEFORE sigmoid = = = = = = = = = =")
         #x = F.sigmoid(x_norm)
-        x = F.tanh(x_norm)
+        x = tanh(x_norm)
 
         x = self.linear2(x)
 
@@ -72,7 +73,7 @@ class pi_net(nn.Module):
         x_minus_x_avg = x - x_avg
         x_std = torch.sum(torch.pow(x_minus_x_avg, 2)) / 40
         x_norm = (x_minus_x_avg) / (torch.sqrt(x_std) + epsilon)
-        x = F.tanh(x_norm)
+        x = tanh(x_norm)
 
         # print("AFTER sigmoid = = = = = = = = = =")
         # print(x)

@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch
 from torch.autograd import Variable
 import torch.nn.functional as F
-from FleetSimulator import FleetEnv
+from FleetSimulatorEnv import FleetEnv
 from utils import get_state_repr, get_state_as_pair, get_state_from_int, generate_name
 import numpy as np
 import torch.optim as optim

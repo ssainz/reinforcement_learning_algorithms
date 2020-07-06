@@ -13,22 +13,26 @@ def split(a, n):
     return (a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
 
 
-iterations = [500]
+iterations = [10000]
 net_generators = [get_pi_net]
-lrs = [0.0003,  0.001, 0.006,  0.03, 0.06]
-gammas = [0.8,  0.9,  0.99]
+lrs = [0.0003 ]
+#lrs = [0.0003,  0.001, 0.006,  0.03, 0.06]
+# 0.0003 seems the best option
+#gammas = [0.95]
+gammas = [0.9, 0.99]
 
+experiments = []
 for it in iterations:
     for net_generator in net_generators:
         for lr in lrs:
             for gamma in gammas:
                 cf = {
-                    'net': net_generator(),
+                    'net': "pi_net",
                     'iterations': it,
                     'gamma':gamma,
                     'lr': lr,
                     'DEBUG': False,
-                    'num_of_agents': 6
+                    'num_of_agents': 20
                 }
                 experiments.append(cf)
 
@@ -41,9 +45,12 @@ for exp in experiments:
     results.append(result)
     names.append(name)
 
+#print("results")
+#print(results)
+
 #Plotting
 pref = str(datetime.datetime.now())
-res = split(results, 10) #splits in sets of five
+res = split(results, 5) #splits in sets of five
 nam = split(names, 5)
 i = 0
 for results, names in zip(res, nam):
