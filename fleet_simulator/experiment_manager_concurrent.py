@@ -13,7 +13,7 @@ def split(a, n):
     return (a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
 
 
-iterations = [10000]
+iterations = [2000]
 net_generators = [get_pi_net]
 lrs = [0.0003 ]
 #lrs = [0.0003,  0.001, 0.006,  0.03, 0.06]
@@ -50,8 +50,8 @@ for exp in experiments:
 
 #Plotting
 pref = str(datetime.datetime.now())
-res = split(results, 5) #splits in sets of five
-nam = split(names, 5)
+res = split(results, 2) #splits in sets of five
+nam = split(names, 2)
 i = 0
 for results, names in zip(res, nam):
     i += 1

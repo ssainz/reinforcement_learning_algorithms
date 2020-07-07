@@ -59,10 +59,12 @@ class FleetEnv():
                     print("Getting agent's actions")
                 # Get all agent's actions
                 new_agents_positions = {}
+                new_agents_positions_matrix = np.zeros((self.len, self.len))
                 for agent in range(self.number_of_agents):
                     agent_id, agent_action = self.receiving_queue.get()
                     agent_action_row, agent_action_col = self.get_action_rows_cols(agent_action)
                     new_agents_positions[agent_id] = (agent_action_row, agent_action_col)
+                    new_agents_positions_matrix[agent_action_row, agent_action_col] += 1
 
                 if self.DEBUG:
                     print("Got agent's actions")
@@ -77,14 +79,10 @@ class FleetEnv():
                 for agent_id in self.agents.keys():
                     agent_travelled_distance = abs(self.agents[agent_id][0] - new_agents_positions[agent_id][0]) + abs(self.agents[agent_id][1] - new_agents_positions[agent_id][1])
                     agents_rewards[agent_id] = self.rewards[new_agents_positions[agent_id][0], new_agents_positions[agent_id][1]] * ( 1 - 0.8 * (agent_travelled_distance / self.tot_distance))
-                    if self.rewards[new_agents_positions[agent_id][0], new_agents_positions[agent_id][1]] > 0:
-                        self.rewards[new_agents_positions[agent_id][0], new_agents_positions[agent_id][1]] -= 1
-                    #print("agents_rewards[agent_id]")
-                    #print(agents_rewards[agent_id])
-                    #print("agent_id, new_agents_positions[agent_id][0], new_agents_positions[agent_id][1]")
-                    #print(agent_id, new_agents_positions[agent_id][0], new_agents_positions[agent_id][1])
-                    #print("self.rewards")
-                    #print(self.rewards)
+                    #if self.rewards[new_agents_positions[agent_id][0], new_agents_positions[agent_id][1]] > 0:
+                    #    self.rewards[new_agents_positions[agent_id][0], new_agents_positions[agent_id][1]] -= 1
+                    self.rewards[new_agents_positions[agent_id][0], new_agents_positions[agent_id][1]] /=  new_agents_positions_matrix[new_agents_positions[agent_id][0], new_agents_positions[agent_id][1]]
+
 
                 self.agents = new_agents_positions
 
