@@ -6,20 +6,20 @@ import numpy as np
 from utils import generate_name
 import datetime
 
-matplotlib.use("Qt5Agg")
+#matplotlib.use("Qt5Agg")
 
 def split(a, n):
     k, m = divmod(len(a), n)
     return (a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
 
 
-iterations = [2000]
+iterations = [20000]
 net_generators = [get_pi_net]
-lrs = [0.0003 ]
+lrs = [0.0001, 0.0003 , 0.0006]
 #lrs = [0.0003,  0.001, 0.006,  0.03, 0.06]
 # 0.0003 seems the best option
 #gammas = [0.95]
-gammas = [0.9, 0.99]
+gammas = [0.8, 0.9, 0.99]
 
 experiments = []
 for it in iterations:
