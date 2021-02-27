@@ -2,8 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="395f9e16-96f8-4641-aff5-db125d0ac7ab" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/Env.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Experiment.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frozen_Lake_REINFORCE.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NetConf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Robot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RobotReinforce.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/World.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/reinforcement_learning_algorithms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reinforcement_learning_algorithms.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fleet_simulator/experiment_manager_concurrent.py" beforeDir="false" afterPath="$PROJECT_DIR$/fleet_simulator/experiment_manager_concurrent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frozen_Lake_Actor_Critic_Batch_NoReplacement.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/Frozen_Lake_Actor_Critic_Batch_NoReplacement.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frozen_Lake_Baseline_Policy_Gradient.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/Frozen_Lake_Baseline_Policy_Gradient.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frozen_Lake_DDQN.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/Frozen_Lake_DDQN.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frozen_Lake_DQN.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/Frozen_Lake_DQN.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frozen_Lake_TD_Tabular.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/Frozen_Lake_TD_Tabular.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frozen_lake_Monte_Carlo_Policy_Gradient.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/Frozen_lake_Monte_Carlo_Policy_Gradient.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MSE-Batch.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/MSE-Batch.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MSE-many-dim.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/MSE-many-dim.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MSE-tanh.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/MSE-tanh.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MSE.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/MSE.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/jupyter/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,15 +59,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="877" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1WSYyqjtIsgjyPgqHFnRmtZIJV2" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/nets" />
+      <recent name="$PROJECT_DIR$/jupyter" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -78,6 +107,7 @@
       <workItem from="1595173695186" duration="37000" />
       <workItem from="1595173749486" duration="43000" />
       <workItem from="1595173816843" duration="2587000" />
+      <workItem from="1609610697467" duration="26895000" />
     </task>
     <servers />
   </component>
