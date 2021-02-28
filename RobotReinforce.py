@@ -6,15 +6,17 @@ from NetConf import NetConf
 from Robot import Robot
 import torch.optim as optim
 
+torch.autograd.set_detect_anomaly(True)
 class RobotReinforce(Robot):
-    def __init__(self):
-        self.GAMMA = 0.99
-        self.net = NetConf([16, 120, 84, 4])
+    def __init__(self, config):
+        super().__init__(config)
+        self.GAMMA = config["gamma"]
+        self.net = NetConf(config["net_config"])
         if torch.cuda.is_available():
             self.net = self.net.cuda()
         #print(self.net)
         self.net.inits()
-        self.optimizer = optim.Adam(self.net.parameters(), lr=0.0001)
+        self.optimizer = optim.Adam(self.net.parameters(), lr=config["lr"])
         self.trajectory = []
         self.optimizer.zero_grad()  # zero gradient buffers
         self.wins = 0

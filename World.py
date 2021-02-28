@@ -4,15 +4,15 @@ import Env
 
 
 class World:
-    def __init__(self, robot: Robot, env: Env):
+    def __init__(self, robot: Robot, env: Env, episodes, frequency_checks):
         self.robot = robot
         self.env = env
-        self.MAX_ITERATIONS = 2000000
-        self.FREQUENCY_CHECKS = 100
-
+        self.MAX_ITERATIONS = episodes
+        self.FREQUENCY_CHECKS = frequency_checks
+        self.results = []
     def live(self):
         torch.autograd.set_detect_anomaly(True)
-        env = self.env
+        env = self.env.env # actual gym or other env
         robot = self.robot
         hits = 0
 
@@ -28,6 +28,8 @@ class World:
                 observation = new_observation
             robot.learn_at_end_of_episode()
             if (iteration + 1) % self.FREQUENCY_CHECKS == 0:
+                self.results.append([robot.wins])
                 print("Wins per {}: {}".format(self.FREQUENCY_CHECKS, robot.wins))
                 robot.wins = 0
         env.close()
+

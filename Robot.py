@@ -1,5 +1,6 @@
 class Robot:
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         return
     def generate_state(self, obs):
         return
@@ -11,3 +12,4 @@ class Robot:
         return
     def decide(self, obs):
         return
+
