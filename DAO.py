@@ -7,6 +7,8 @@ from World import World
 # DB:
 db_create_script = '''
  create table rlresult(
+     group_id int, 
+     result_id int,
      robot_config_id    int,
      env_config_id int,
      step int,
@@ -41,19 +43,23 @@ class dao:
                                                host='192.168.0.6',
                                                database='rlresults')
     def save_world(self, world: World):
+        id = self.get_latest_result_id() + 1
         robot_id = self.save_robot(world.robot)
         env_id = self.save_env(world.env)
         step = 1
         for result in world.results:
             if len(result) == 1:
-                self.run_insert("insert into rlresult (robot_config_id, env_config_id, step, reward) values (%s, %s, %s, %s)" % (
+                self.run_insert("insert into rlresult (group_id, result_id, robot_config_id, env_config_id, step, reward) values (%s, %s, %s, %s, %s, %s)" % (
+                    str(world.group_id),
+                    str(id),
                     str(robot_id),
                     str(env_id),
                     str(step),
                     str(result[0])
                 ))
             elif len(result) == 4:
-                self.run_insert("insert into rlresult (robot_config_id, env_config_id, step, reward, reward1, reward2, reward3) values (%s, %s, %s, %s)" % (
+                self.run_insert("insert into rlresult (group_id, result_id, robot_config_id, env_config_id, step, reward, reward1, reward2, reward3) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)" % (
+                    str(world.group_id),
                     str(robot_id),
                     str(env_id),
                     str(step),
@@ -102,6 +108,20 @@ class dao:
         return id
     def get_latest_env_id(self):
         query = "select max(env_config_id) from env_config"
+        results = self.run_query(query)
+        id = 0
+        for tuple in results:
+            id = tuple[0] if tuple[0] is not None else 0
+        return id
+    def get_latest_result_id(self):
+        query = "select max(result_id) from rlresult"
+        results = self.run_query(query)
+        id = 0
+        for tuple in results:
+            id = tuple[0] if tuple[0] is not None else 0
+        return id
+    def get_latest_group_id(self):
+        query = "select max(group_id) from rlresult"
         results = self.run_query(query)
         id = 0
         for tuple in results:

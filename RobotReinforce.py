@@ -19,17 +19,17 @@ class RobotReinforce(Robot):
         self.optimizer = optim.Adam(self.net.parameters(), lr=config["lr"])
         self.trajectory = []
         self.optimizer.zero_grad()  # zero gradient buffers
-        self.wins = 0
+        self.cum_reward = 0
     def generate_state(self, obs):
         st = np.zeros(16)
         st[obs] = 1
         return st
-    def add_observation_reward(self, prev_obs, obs, reward):
+    def add_observation_reward(self, prev_obs, action, obs, reward, done):
         prev_state = self.generate_state(prev_obs)
         state = self.generate_state(obs)
         self.trajectory.append((prev_state, self.action, self.log_prob, state, reward))
         if reward > 0:
-            self.wins += 1
+            self.cum_reward += reward
     def learn_at_end_of_step(self):
         return
     def learn_at_end_of_episode(self):

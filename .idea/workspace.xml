@@ -2,20 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="395f9e16-96f8-4641-aff5-db125d0ac7ab" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAO.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RobotConstructor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RobotDDQN.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RobotDQN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Env.py" beforeDir="false" afterPath="$PROJECT_DIR$/Env.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experiment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NetConf.py" beforeDir="false" afterPath="$PROJECT_DIR$/NetConf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Robot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Robot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RobotConstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/RobotConstructor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RobotReinforce.py" beforeDir="false" afterPath="$PROJECT_DIR$/RobotReinforce.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/World.py" beforeDir="false" afterPath="$PROJECT_DIR$/World.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,25 +65,6 @@
         <option value="Python Script" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>agents</find>
-      <find>net</find>
-      <find>new_agents_positions</find>
-      <find>reward_chart</find>
-      <find>GAMM</find>
-      <find>optimi</find>
-      <find>agents_rewards</find>
-      <find>times_reach</find>
-      <find>tanh</find>
-      <find>_results</find>
-      <find>score</find>
-      <find>times</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>results</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -139,7 +119,7 @@
       <workItem from="1595173695186" duration="37000" />
       <workItem from="1595173749486" duration="43000" />
       <workItem from="1595173816843" duration="2587000" />
-      <workItem from="1609610697467" duration="43874000" />
+      <workItem from="1609610697467" duration="57784000" />
     </task>
     <servers />
   </component>

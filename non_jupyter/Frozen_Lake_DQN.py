@@ -2,7 +2,6 @@ from collections import namedtuple
 Transition = namedtuple('Transition',
                         ('state', 'action', 'next_state', 'reward','done'))
 
-
 class ReplayMemory(object):
 
     def __init__(self, capacity):
@@ -22,7 +21,6 @@ class ReplayMemory(object):
 
     def __len__(self):
         return len(self.memory)
-
 
 import torch
 import torchvision

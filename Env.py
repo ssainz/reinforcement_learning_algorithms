@@ -1,6 +1,6 @@
 import gym
 from gym import register
-
+from gym import envs
 class Env:
     def __init__(self, _env, env_config):
         self.env = _env
@@ -21,12 +21,15 @@ def EnvConstructor(env_config):
         _env = gym.make(env_config["name"])
         return Env(_env, env_config)
     elif env_config["env_type"] == "gym-registry":
-        register(
-            id=env_config["register"]["id"],
-            entry_point=env_config["register"]["entry_point"],
-            kwargs=env_config["register"]["kwargs"],
-            max_episode_steps=env_config["register"]["max_episode_steps"],
-            reward_threshold=env_config["register"]["reward_threshold"]
-        )
+        all_envs = envs.registry.all()
+        env_ids = [env_spec.id for env_spec in all_envs]
+        if env_config["register"]["id"] not in env_ids:
+            register(
+                id=env_config["register"]["id"],
+                entry_point=env_config["register"]["entry_point"],
+                kwargs=env_config["register"]["kwargs"],
+                max_episode_steps=env_config["register"]["max_episode_steps"],
+                reward_threshold=env_config["register"]["reward_threshold"]
+            )
         _env = gym.make(env_config["register"]["id"])
         return Env(_env, env_config)
