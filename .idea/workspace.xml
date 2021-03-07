@@ -2,13 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="395f9e16-96f8-4641-aff5-db125d0ac7ab" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rlalgo/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experiment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/DAO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Env.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Experiment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frozen_Lake_REINFORCE.py" beforeDir="false" afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_REINFORCE.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotDDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/RobotDDQN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/RobotDQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Memory.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Memory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NetConf.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/NetConf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Robot.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Robot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RobotConstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotConstructor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RobotDDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotDDQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RobotDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotDQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RobotReinforce.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotReinforce.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/World.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/World.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,6 +80,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1WSYyqjtIsgjyPgqHFnRmtZIJV2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -79,22 +95,13 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/rlalgo" />
+      <recent name="$PROJECT_DIR$/non_jupyter" />
       <recent name="$PROJECT_DIR$/nets" />
       <recent name="$PROJECT_DIR$/jupyter" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -112,24 +119,24 @@
       <workItem from="1595173749486" duration="43000" />
       <workItem from="1595173816843" duration="2587000" />
       <workItem from="1609610697467" duration="64272000" />
+      <workItem from="1615134587827" duration="2853000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

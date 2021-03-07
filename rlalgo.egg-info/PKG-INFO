@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: rlalgo
+Version: 1.0.0
+Summary: reinforcement_learning_algorithms
+Home-page: <https://github.com/ssainz/reinforcement_learning_algorithms>
+Author: ssainz
+Author-email: <sergio.sainz@gmail.com>
+License: UNKNOWN
+Description: # Collection of Reinforcement Learning Algorithms
+        
+        Collection of popular reinforcement learning algorithms and abstractions to test them across different environments.
+        
+        ## Install
+        
+        ```angular2html
+        pip install --upgrade setuptools
+        pip install --editable .
+        ```
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown

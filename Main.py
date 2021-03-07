@@ -1,5 +1,5 @@
-from DAO import dao
-from Experiment import Experiment
+from rlalgo.DAO import dao
+from rlalgo.Experiment import Experiment
 
 
 if __name__ == "__main__":

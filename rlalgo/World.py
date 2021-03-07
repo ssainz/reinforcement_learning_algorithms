@@ -1,6 +1,5 @@
 import torch
-import Robot
-import Env
+from rlalgo import Env, Robot
 
 
 class World:

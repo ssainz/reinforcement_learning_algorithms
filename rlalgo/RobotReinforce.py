@@ -2,8 +2,8 @@ import numpy as np
 import torch
 from torch.distributions import Categorical
 
-from NetConf import NetConf
-from Robot import Robot
+from rlalgo.NetConf import NetConf
+from .Robot import Robot
 import torch.optim as optim
 
 torch.autograd.set_detect_anomaly(True)

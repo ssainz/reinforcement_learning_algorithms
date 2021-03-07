@@ -4,9 +4,9 @@ import numpy as np
 import torch
 from torch.distributions import Categorical
 
-from Memory import ReplayMemory, Transition
-from NetConf import NetConf
-from Robot import Robot
+from rlalgo.Memory import ReplayMemory, Transition
+from rlalgo.NetConf import NetConf
+from .Robot import Robot
 import torch.optim as optim
 import torch.nn.functional as F
 

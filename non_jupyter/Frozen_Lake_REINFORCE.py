@@ -3,7 +3,7 @@ import torch
 import numpy as np
 import torch.optim as optim
 from torch.distributions.categorical import Categorical
-from NetConf import Net_REINFORCE
+from rlalgo.NetConf import Net_REINFORCE
 
 
 # register(

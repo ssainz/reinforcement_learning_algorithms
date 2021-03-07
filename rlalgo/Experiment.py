@@ -1,9 +1,9 @@
-from DAO import dao
-from Env import Env
-from Env import EnvConstructor
-from RobotConstructor import RobotConstructor
-from Robot import Robot
-from World import World
+from .DAO import dao
+from .Env import Env
+from .Env import EnvConstructor
+from .RobotConstructor import RobotConstructor
+from .Robot import Robot
+from .World import World
 
 
 class Experiment:

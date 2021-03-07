@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
 
-    name="reinforcement_learning_algorithms", # Replace with your username
+    name="rlalgo", # Replace with your username
 
     version="1.0.0",
 
@@ -38,6 +38,7 @@ setuptools.setup(
                       'gym',
                       'torchvision',
                       'numpy',
+                      'mysql_connector_python'
                       ],
 
 )

@@ -1,6 +1,6 @@
-from RobotDDQN import RobotDDQN
-from RobotDQN import RobotDQN
-from RobotReinforce import RobotReinforce
+from .RobotDDQN import RobotDDQN
+from .RobotDQN import RobotDQN
+from .RobotReinforce import RobotReinforce
 
 
 def RobotConstructor(robot_config):

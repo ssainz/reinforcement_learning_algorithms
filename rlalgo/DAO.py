@@ -1,8 +1,8 @@
 from mysql.connector import (connection)
 
-from Env import Env
-from Robot import Robot
-from World import World
+from .Robot import Robot
+from .Env import Env
+from .World import World
 
 # DB:
 db_create_script = '''
