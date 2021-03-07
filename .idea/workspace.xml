@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="395f9e16-96f8-4641-aff5-db125d0ac7ab" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Memory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RobotDDQN.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RobotDQN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/DAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Env.py" beforeDir="false" afterPath="$PROJECT_DIR$/Env.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experiment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Robot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Robot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotConstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/RobotConstructor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotReinforce.py" beforeDir="false" afterPath="$PROJECT_DIR$/RobotReinforce.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/World.py" beforeDir="false" afterPath="$PROJECT_DIR$/World.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_DQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RobotDDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/RobotDDQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RobotDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/RobotDQN.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -119,7 +111,7 @@
       <workItem from="1595173695186" duration="37000" />
       <workItem from="1595173749486" duration="43000" />
       <workItem from="1595173816843" duration="2587000" />
-      <workItem from="1609610697467" duration="57784000" />
+      <workItem from="1609610697467" duration="64272000" />
     </task>
     <servers />
   </component>

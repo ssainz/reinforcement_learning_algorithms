@@ -13,15 +13,18 @@ import torch.nn.functional as F
 torch.autograd.set_detect_anomaly(True)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 NUM_EPISODES = 500000
-BATCH_SIZE = 500
+BATCH_SIZE = 600
 TARGET_UPDATE = 50
 EPS_START = 0.95
 EPS_END = 0.00
-EPS_DECAY = 1000000
+EPS_DECAY = 5000
 
 class RobotDDQN(Robot):
     def __init__(self, config):
         super().__init__(config)
+        self.config = config
+        self.in_size = self.config["net_config"]["layers"][0]
+        self.out_size = self.config["net_config"]["layers"][-1]
         self.GAMMA = config["gamma"]
         self.online_net = NetConf(config["net_config"])
         self.target_net = NetConf(config["net_config"])
@@ -57,13 +60,16 @@ class RobotDDQN(Robot):
         # Compute a mask of non-final states and concatenate the batch elements
         next_state_final_mask = torch.tensor(tuple(map(lambda d: d is True,
                                                 batch.done)), device=device, dtype=torch.bool).unsqueeze(1)
-        next_state_final_list = torch.cat([torch.FloatTensor([s]) for s, d in zip(batch.next_state, batch.done)
-                                           if d is True])
+        next_state_final_python_list = [torch.FloatTensor([s]) for s, d in zip(batch.next_state, batch.done)
+                                           if d is True]
+        if len(next_state_final_python_list) == 0:
+            return # do not train if no final state found
+        next_state_final_list = torch.cat(next_state_final_python_list)
 
         state_batch = torch.FloatTensor(batch.state)
-        state_batch = state_batch.view(BATCH_SIZE, 16)
+        state_batch = state_batch.view(BATCH_SIZE, self.in_size)
         next_state_batch = torch.FloatTensor(batch.next_state)
-        next_state_batch = next_state_batch.view(BATCH_SIZE, 16)
+        next_state_batch = next_state_batch.view(BATCH_SIZE, self.in_size)
         action_batch = torch.LongTensor(batch.action).view(BATCH_SIZE, 1)
         reward_batch = torch.FloatTensor(batch.reward).view(BATCH_SIZE, 1)
 
@@ -113,10 +119,10 @@ class RobotDDQN(Robot):
         if torch.cuda.is_available():
             observation_tensor = observation_tensor.type(torch.FloatTensor).cuda()
         sample = random.random()
-        eps_threshold = EPS_END + (EPS_START - EPS_END) * math.exp(-1. * self.steps_done / EPS_DECAY)
+        eps_threshold = max((1.0 - (self.steps_done / EPS_DECAY)), 0.0)
         self.steps_done += 1
-        q_values = self.online_net(observation_tensor)
         if sample >= eps_threshold:
+            q_values = self.online_net(observation_tensor)
             self.action = q_values.max(1)[1]  # First 1 is the dimension, second 1 is the index (this is argmax)
         elif torch.cuda.is_available():
             self.action = torch.FloatTensor([[random.randrange(4)]]).to('cuda')
