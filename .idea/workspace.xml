@@ -2,24 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="395f9e16-96f8-4641-aff5-db125d0ac7ab" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rlalgo/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/reinforcement_learning_algorithms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reinforcement_learning_algorithms.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/DAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Env.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Experiment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frozen_Lake_REINFORCE.py" beforeDir="false" afterPath="$PROJECT_DIR$/non_jupyter/Frozen_Lake_REINFORCE.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Memory.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Memory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NetConf.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/NetConf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Robot.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Robot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotConstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotConstructor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotDDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotDDQN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotDQN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotReinforce.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotReinforce.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/World.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/World.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/DAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/DAO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/RobotDDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotDDQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/RobotDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotDQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/RobotReinforce.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotReinforce.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +92,30 @@
       <recent name="$PROJECT_DIR$/jupyter" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python">
+      <module name="reinforcement_learning_algorithms" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/venv3_pytorch_1_5/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
@@ -119,7 +134,7 @@
       <workItem from="1595173749486" duration="43000" />
       <workItem from="1595173816843" duration="2587000" />
       <workItem from="1609610697467" duration="64272000" />
-      <workItem from="1615134587827" duration="2853000" />
+      <workItem from="1615134587827" duration="9860000" />
     </task>
     <servers />
   </component>
@@ -145,7 +160,20 @@
           <url>file://$PROJECT_DIR$/non_jupyter/Frozen_Lake_Monte_Carlo_Policy_Gradient_non_Jupyter.py</url>
           <line>28</line>
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rlalgo/DAO.py</url>
+          <line>101</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rlalgo/DAO.py</url>
+          <line>150</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/reinforcement_learning_algorithms$main.coverage" NAME="main Coverage Results" MODIFIED="1615742305824" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

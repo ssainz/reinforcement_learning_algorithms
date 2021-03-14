@@ -9,8 +9,8 @@ db_create_script = '''
  create table rlresult(
      group_id int, 
      result_id int,
-     robot_config_id    int,
-     env_config_id int,
+ robot_config_idint,
+ env_config_id int,
      step int,
      reward DOUBLE,
      reward1 DOUBLE,
@@ -20,18 +20,20 @@ db_create_script = '''
  );
  drop table robot_config;
  create table robot_config(
-     robot_config_id     int,
-     robot_type VARCHAR(100),
-     net_config_layers VARCHAR(1000),
-     net_config_nonlinear VARCHAR(100),
-     gamma DOUBLE,
-     lr DOUBLE
+ robot_config_id int,
+ robot_type VARCHAR(100),
+ net_config_layers VARCHAR(1000),
+ net_config_nonlinear VARCHAR(100),
+ gamma DOUBLE,
+ lr DOUBLE,
+ robot_config JSON
  );
  drop table env_config;
  create table env_config(
-     env_config_id int,
-     env_type VARCHAR(50),
-     name VARCHAR(200)
+ env_config_id int,
+ env_type VARCHAR(50),
+ name VARCHAR(200),
+ env_config JSON
  );
 '''
 
@@ -77,14 +79,16 @@ class dao:
                         "net_config_layers,"
                         "net_config_nonlinear,"
                         "gamma,"
-                        "lr"
-                        ") values (%s, '%s', '%s', '%s', %s, %s)" % (
+                        "lr,"
+                        "robot_config"
+                        ") values (%s, '%s', '%s', '%s', %s, %s, %s)" % (
             str(id),
-            robot.config["robot_type"],
+            str(robot.config["robot_type"]),
             str(robot.config["net_config"]["layers"]),
-            robot.config["net_config"]["non_linear_function"],
+            str(robot.config["net_config"]["non_linear_function"]),
             str(robot.config["gamma"]),
-            str(robot.config["lr"])
+            str(robot.config["lr"]),
+            "'"+to_json(str(robot.config))+"'"
         ))
         return id
     def get_latest_robot_id(self):
@@ -99,11 +103,13 @@ class dao:
         self.run_insert("insert into env_config ("
                         "env_config_id,"
                         "env_type,"
-                        "name"
-                        ") values (%s, '%s', '%s')" % (
+                        "name,"
+                        "env_config"
+                        ") values (%s, '%s', '%s','%s')" % (
             str(id),
             env.env_config["env_type"],
-            env.env_config["name"]
+            env.env_config["name"],
+            to_json(str(env.env_config))
         ))
         return id
     def get_latest_env_id(self):
@@ -141,3 +147,9 @@ class dao:
         self.conn.commit()
     def close(self):
         self.conn.close()
+def to_json(json_str):
+    a = json_str
+    b = a.replace("'", '"')
+    c = b.replace("False","false")
+    d = c.replace("True","true")
+    return d

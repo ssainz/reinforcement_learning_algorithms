@@ -115,7 +115,7 @@ class RobotDDQN(Robot):
             self.target_net.load_state_dict(self.online_net.state_dict())
     def decide(self, observation):
         state = self.generate_state(observation)
-        observation_tensor = torch.from_numpy(state)
+        observation_tensor = torch.from_numpy(state).type(torch.FloatTensor)
         if torch.cuda.is_available():
             observation_tensor = observation_tensor.type(torch.FloatTensor).cuda()
         sample = random.random()

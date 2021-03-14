@@ -54,6 +54,7 @@ if __name__ == "__main__":
     group_id = dao_obj.get_latest_group_id() + 1
     for learn_config in learn_configs:
         for env_config in env_configs:
-            episodes = 1500
+            #episodes = 1500
+            episodes = 10 # test
             exp = Experiment(episodes=episodes, frequency_checks=episodes/10, group_id=group_id, learn_config=learn_config, env_config=env_config, repeats=3)
             exp.experiment()

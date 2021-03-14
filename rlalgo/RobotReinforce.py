@@ -63,7 +63,7 @@ class RobotReinforce(Robot):
         return
     def decide(self, obs):
         state = self.generate_state(obs)
-        tensor = torch.from_numpy(state)
+        tensor = torch.from_numpy(state).type(torch.FloatTensor)
         if torch.cuda.is_available():
             tensor = tensor.type(torch.FloatTensor).cuda()
         action_prob = self.net(tensor)
