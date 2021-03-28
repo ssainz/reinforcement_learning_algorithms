@@ -33,3 +33,7 @@ def EnvConstructor(env_config):
             )
         _env = gym.make(env_config["register"]["id"])
         return Env(_env, env_config)
+    elif env_config["env_type"] == "constructor_provided":
+        env_constructor = env_config["env_constructor_instance"]
+        _env = env_constructor.construct(env_config)
+        return Env(_env, env_config)

@@ -20,10 +20,11 @@ class RobotReinforce(Robot):
         self.trajectory = []
         self.optimizer.zero_grad()  # zero gradient buffers
         self.cum_reward = 0
+        self.state_mapper = config["state_mapper"]
     def generate_state(self, obs):
-        st = np.zeros(16)
-        st[obs] = 1
-        return st
+        return self.state_mapper.generate_state(obs)
+    def adjust_output_action(self, action):
+        return self.state_mapper.adjust_output_action(action)
     def add_observation_reward(self, prev_obs, action, obs, reward, done):
         prev_state = self.generate_state(prev_obs)
         state = self.generate_state(obs)
@@ -70,4 +71,8 @@ class RobotReinforce(Robot):
         m = Categorical(action_prob)
         self.action = m.sample()
         self.log_prob = m.log_prob(self.action)
-        return self.action.item()
+        return self.adjust_output_action(self.action)
+    def get_cum_reward(self):
+        return self.cum_reward
+    def set_cum_reward(self, val):
+        self.cum_reward = val

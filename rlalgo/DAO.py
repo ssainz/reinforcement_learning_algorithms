@@ -3,7 +3,7 @@ from mysql.connector import (connection)
 from .Robot import Robot
 from .Env import Env
 from .World import World
-
+import re
 # DB:
 db_create_script = '''
  create table rlresult(
@@ -42,7 +42,7 @@ class dao:
     def __init__(self):
         self.conn = connection.MySQLConnection(user='ssp',
                                                password='ssp',
-                                               host='192.168.0.6',
+                                               host='192.168.0.2',
                                                database='rlresults')
     def save_world(self, world: World):
         id = self.get_latest_result_id() + 1
@@ -142,6 +142,7 @@ class dao:
         cursor.close()
         return results
     def run_insert(self, query):
+        print(query)
         cursor = self.conn.cursor()
         cursor.execute(query)
         self.conn.commit()
@@ -152,4 +153,5 @@ def to_json(json_str):
     b = a.replace("'", '"')
     c = b.replace("False","false")
     d = c.replace("True","true")
-    return d
+    e = re.sub(r'(<[^>]+0x[^>]+>)',r'"\1"',d) # put "" around patterns such as <EnvSAV.EnvSAVStateMapper object at 0x1154b9d50>
+    return e

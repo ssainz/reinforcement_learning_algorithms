@@ -28,9 +28,9 @@ class World:
                 # print(new_observation)
                 observation = new_observation
             robot.learn_at_end_of_episode()
-            if (iteration + 1) % self.FREQUENCY_CHECKS == 0:
-                self.results.append([robot.cum_reward])
-                print("Avg. reward: {}, in last {} iterations".format( robot.cum_reward / self.FREQUENCY_CHECKS, self.FREQUENCY_CHECKS))
-                robot.cum_reward = 0
+            if (iteration) % self.FREQUENCY_CHECKS == 0:
+                self.results.append([robot.get_cum_reward()])
+                print("Avg. reward: {}, in last {} iterations".format( robot.get_cum_reward() / self.FREQUENCY_CHECKS, self.FREQUENCY_CHECKS))
+                robot.set_cum_reward(0)
         env.close()
 

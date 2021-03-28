@@ -12,4 +12,8 @@ class Robot:
         return
     def decide(self, obs):
         return
+    def get_cum_reward(self):
+        return
+    def set_cum_reward(self, val):
+        return
 
