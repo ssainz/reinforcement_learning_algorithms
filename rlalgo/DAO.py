@@ -42,7 +42,7 @@ class dao:
     def __init__(self):
         self.conn = connection.MySQLConnection(user='ssp',
                                                password='ssp',
-                                               host='192.168.0.2',
+                                               host='192.168.0.24',
                                                database='rlresults')
     def save_world(self, world: World):
         id = self.get_latest_result_id() + 1
