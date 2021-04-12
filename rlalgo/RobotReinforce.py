@@ -29,8 +29,7 @@ class RobotReinforce(Robot):
         prev_state = self.generate_state(prev_obs)
         state = self.generate_state(obs)
         self.trajectory.append((prev_state, self.action, self.log_prob, state, reward))
-        if reward > 0:
-            self.cum_reward += reward
+        self.cum_reward += reward
     def learn_at_end_of_step(self):
         return
     def learn_at_end_of_episode(self):
@@ -45,20 +44,20 @@ class RobotReinforce(Robot):
             GAMMA_inner = self.GAMMA
             while i < len(self.trajectory):
                 G += GAMMA_inner * self.trajectory[i][4] # reward
-                GAMMA_inner *= GAMMA_inner
+                GAMMA_inner *= self.GAMMA
                 i += 1
             loss = -log_prob_tensor * G * GAMMA_outer
-            if G > 0.0:
-                reward_greater_zero=True
+            # if G > 0.0:
+            #     reward_greater_zero=True
             losses.append(loss)
-            GAMMA_outer *= GAMMA_outer
+            GAMMA_outer *= self.GAMMA
             index += 1
-        if reward_greater_zero:
-            # gradient descent
-            losses_sum = torch.cat(losses).sum()
-            losses_sum.backward(retain_graph=True)
-            self.optimizer.step()
-            # gradient descent
+        #if reward_greater_zero:
+        # gradient descent
+        losses_sum = torch.cat(losses).sum()
+        losses_sum.backward(retain_graph=True)
+        self.optimizer.step()
+        # gradient descent
         self.optimizer.zero_grad()  # zero gradient buffers
         self.trajectory.clear()
         return

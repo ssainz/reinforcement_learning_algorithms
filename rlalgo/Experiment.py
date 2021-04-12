@@ -17,6 +17,7 @@ class Experiment:
     def experiment(self):
         best_perf_world = None
         for repeat in range(self.repeats):
+            print("Experiment: repeat %d" % (repeat))
             robot = RobotConstructor(self.learn_config)
             env = EnvConstructor(self.env_config)
             world = World(robot, env, self.episodes, self.frequency_checks, group_id=self.group_id)

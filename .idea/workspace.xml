@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="395f9e16-96f8-4641-aff5-db125d0ac7ab" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/rlalgo/RobotRebalance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/reinforcement_learning_algorithms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reinforcement_learning_algorithms.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rlalgo/DAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/DAO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/Experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/Experiment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/RobotConstructor.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotConstructor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/RobotDDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotDDQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/RobotDQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotDQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/RobotReinforce.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/RobotReinforce.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rlalgo/World.py" beforeDir="false" afterPath="$PROJECT_DIR$/rlalgo/World.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +149,7 @@
       <workItem from="1595173816843" duration="2587000" />
       <workItem from="1609610697467" duration="64272000" />
       <workItem from="1615134587827" duration="51595000" />
-      <workItem from="1616966151996" duration="3524000" />
+      <workItem from="1616966151996" duration="36120000" />
     </task>
     <servers />
   </component>
@@ -170,8 +178,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rlalgo/RobotDQN.py</url>
-          <line>121</line>
+          <line>120</line>
           <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rlalgo/RobotDDQN.py</url>
+          <line>104</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rlalgo/RobotRebalance.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

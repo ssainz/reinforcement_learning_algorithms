@@ -50,8 +50,7 @@ class RobotDQN(Robot):
         prev_state = self.generate_state(prev_obs)
         state = self.generate_state(obs)
         self.memory.push(prev_state, self.action, state, reward, done)
-        if reward > 0:
-            self.cum_reward += reward
+        self.cum_reward += reward
     def learn_at_end_of_step(self):
         if len(self.memory) < BATCH_SIZE:
             return

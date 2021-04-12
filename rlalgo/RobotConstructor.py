@@ -1,6 +1,7 @@
 from .RobotDDQN import RobotDDQN
 from .RobotDQN import RobotDQN
 from .RobotReinforce import RobotReinforce
+from .RobotRebalance import RobotRebalance
 
 
 def RobotConstructor(robot_config):
@@ -14,3 +15,5 @@ def RobotConstructor(robot_config):
         return RobotDQN(robot_config)
     if robot_config["robot_type"] == "RobotDDQN":
         return RobotDDQN(robot_config)
+    if robot_config["robot_type"] == "RobotRebalance":
+        return RobotRebalance(robot_config)

@@ -13,7 +13,7 @@ import torch.nn.functional as F
 torch.autograd.set_detect_anomaly(True)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 NUM_EPISODES = 500000
-BATCH_SIZE = 600
+BATCH_SIZE = 50
 TARGET_UPDATE = 50
 EPS_START = 0.95
 EPS_END = 0.00
@@ -50,8 +50,7 @@ class RobotDDQN(Robot):
         prev_state = self.generate_state(prev_obs)
         state = self.generate_state(obs)
         self.memory.push(prev_state, self.action, state, reward, done)
-        if reward > 0:
-            self.cum_reward += reward
+        self.cum_reward += reward
     def learn_at_end_of_step(self):
         if len(self.memory) < BATCH_SIZE:
             return
@@ -65,7 +64,7 @@ class RobotDDQN(Robot):
 
         if len(self.get_one_decision_action_shape()) >= 3:
             # For SAV we need to reduce the dimensions from [50,1] to [50]
-            non_final_mask = non_final_mask.squeeze(len(non_final_mask.size()) - 1)
+            next_state_final_mask = next_state_final_mask.squeeze(len(next_state_final_mask.size()) - 1)
             # For SAV , non_final_mask is now [50]
 
         next_state_final_python_list = [torch.FloatTensor([s]) for s, d in zip(batch.next_state, batch.done)
@@ -106,6 +105,8 @@ class RobotDDQN(Robot):
         argmax_a_online_net_next_state = self.online_net(next_state_batch).max(self.last_dimension)[1].detach()
         if len(self.get_one_decision_action_shape()) >= 3:
             shape_of_output = self.get_one_decision_action_shape(BATCH_SIZE)
+            # argmax_a_online_net_next_state shape is [50,21]
+            shape_of_output = (shape_of_output[0], shape_of_output[1]) # [50,21]
             argmax_a_online_net_next_state = argmax_a_online_net_next_state.view(shape_of_output)
         else:
             argmax_a_online_net_next_state = argmax_a_online_net_next_state.view(BATCH_SIZE, 1)
@@ -114,12 +115,14 @@ class RobotDDQN(Robot):
         # Below is the actual Q_target
         next_state_values = self.target_net(next_state_batch).detach()
         if len(self.get_one_decision_action_shape()) >= 3:
+            # argmax_a_online_net_next_state is [50, 21]
             argmax_a_online_net_next_state = argmax_a_online_net_next_state.unsqueeze(len(argmax_a_online_net_next_state.size()))
             # For SAV argmax_a_online_net_next_state is now a [50,21,1] tensor
             next_state_values = next_state_values.gather(len(self.get_one_decision_action_shape())-1, argmax_a_online_net_next_state)
             # For SAV next_state_values is now a [50,21,1] tensor
             shape_of_output = self.get_one_decision_action_shape(BATCH_SIZE)
-            shape_of_output = (shape_of_output[0], shape_of_output[1], 1) # for SAV, shape is [50,21,1]
+            shape_of_output = (torch.sum(next_state_final_mask).item(), shape_of_output[1], 1) # for SAV, shape is [X,21,1]
+                                                                                        # where X is number of True elements in next_state_final_mask
             next_state_values[next_state_final_mask] = torch.zeros(shape_of_output, device=device)
         else:
             next_state_values = next_state_values.gather(1, argmax_a_online_net_next_state)
