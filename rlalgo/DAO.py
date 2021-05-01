@@ -40,8 +40,8 @@ db_create_script = '''
 
 class dao:
     def __init__(self):
-        self.conn = connection.MySQLConnection(user='ssp',
-                                               password='ssp',
+        self.conn = connection.MySQLConnection(user='',
+                                               password='',
                                                host='192.168.0.24',
                                                database='rlresults')
     def save_world(self, world: World):
